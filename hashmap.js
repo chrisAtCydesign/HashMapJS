@@ -40,7 +40,7 @@ var HashMap = function() {
 
 HashMap.prototype = {
   hashkey_prefix: "<#HashMapHashkeyPerfix>",
-  hashcode_field: "<#HashMapHashkeyPerfix>",
+  hashcode_field: "<#HashMapHashcodeField>",
 
   initialize: function() {
     this.backing_hash = {};
