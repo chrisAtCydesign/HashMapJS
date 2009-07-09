@@ -1,0 +1,21 @@
+HashMapJS is simple hash map like implementation.
+
+The keys and values can be arbitrary javascript objects.
+There is no requirements on objects used as keys or values.
+
+The mechanism is trivial. For every key there is generated unique id (per HashMap instance).
+That id is injected to the key object under high unlikely to collide field name ;)
+
+That id is then used to keying in the underlying baking standard javascript association object.
+
+Notes:
+1. This HashMap implementation is not thread safe.
+  OK I know javascript is not multithreaded but it can have concurrent activites (e.g. setTimeout)
+  This is enough to have race conditions.
+  
+2. The mentioned high unlikely to collide name is not a problem as log as there is no 
+massively concurrent activities.
+
+Roadmap:
+1. Make the HashMap implementation thread safe by applying The Wallace Variation of Lamport's bakery algorithm.
+http://www.polyglotinc.com/AJAXscratch/Mutex/mutualExclusion.html
