@@ -41,10 +41,17 @@ var HashMap = function() {
 HashMap.prototype = {
   hashkey_prefix: "<#HashMapHashkeyPerfix>",
   hashcode_field: "<#HashMapHashcodeField>",
+  hashmap_instance_id: 0,
 
   initialize: function() {
     this.backing_hash = {};
     this.code = 0;
+    this.hashmap_instance_id += 1;
+    this.instance_id = this.hashmap_instance_id;
+  },
+  
+  hashcodeField: function(){
+    return this.hashcode_field+this.instance_id;
   },
   /*
    maps value to key returning previous assocciation
@@ -52,13 +59,13 @@ HashMap.prototype = {
   put: function(key, value) {
     var prev;
     if (key && value) {
-      var hashCode = key[this.hashcode_field];
+      var hashCode = key[this.hashcodeField()];
       if (hashCode) {
         prev = this.backing_hash[hashCode];
       } else {
         this.code += 1;
         hashCode = this.hashkey_prefix + this.code;
-        key[this.hashcode_field] = hashCode;
+        key[this.hashcodeField()] = hashCode;
       }
       this.backing_hash[hashCode] = value;
     }
@@ -70,7 +77,7 @@ HashMap.prototype = {
   get: function(key) {
     var value;
     if (key) {
-      var hashCode = key[this.hashcode_field];
+      var hashCode = key[this.hashcodeField()];
       if (hashCode) {
         value = this.backing_hash[hashCode];
       }
@@ -84,7 +91,7 @@ HashMap.prototype = {
   del: function(key) {
     var success = false;
     if (key) {
-      var hashCode = key[this.hashcode_field];
+      var hashCode = key[this.hashcodeField()];
       if (hashCode) {
         var prev = this.backing_hash[hashCode];
         this.backing_hash[hashCode] = undefined;
