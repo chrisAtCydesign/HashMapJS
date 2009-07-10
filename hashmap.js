@@ -49,17 +49,23 @@ HashMap.prototype = {
     this.hashmap_instance_id += 1;
     this.instance_id = this.hashmap_instance_id;
   },
-  
-  hashcodeField: function(){
-    return this.hashcode_field+this.instance_id;
+
+  hashcodeField: function() {
+    return this.hashcode_field + this.instance_id;
   },
   /*
    maps value to key returning previous assocciation
    */
   put: function(key, value) {
     var prev;
+
     if (key && value) {
-      var hashCode = key[this.hashcodeField()];
+      var hashCode;
+      if (typeof(key) === "number" || typeof(key) === "string") {
+        hashCode = key;
+      } else {
+        hashCode = key[this.hashcodeField()];
+      }
       if (hashCode) {
         prev = this.backing_hash[hashCode];
       } else {
@@ -77,7 +83,12 @@ HashMap.prototype = {
   get: function(key) {
     var value;
     if (key) {
-      var hashCode = key[this.hashcodeField()];
+      var hashCode;
+      if (typeof(key) === "number" || typeof(key) === "string") {
+        hashCode = key;
+      } else {
+        hashCode = key[this.hashcodeField()];
+      }
       if (hashCode) {
         value = this.backing_hash[hashCode];
       }
@@ -91,11 +102,16 @@ HashMap.prototype = {
   del: function(key) {
     var success = false;
     if (key) {
-      var hashCode = key[this.hashcodeField()];
+      var hashCode;
+      if (typeof(key) === "number" || typeof(key) === "string") {
+        hashCode = key;
+      } else {
+        hashCode = key[this.hashcodeField()];
+      }
       if (hashCode) {
         var prev = this.backing_hash[hashCode];
         this.backing_hash[hashCode] = undefined;
-        if(prev !== undefined)
+        if (prev !== undefined)
           success = true;
       }
     }

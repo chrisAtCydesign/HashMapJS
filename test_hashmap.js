@@ -81,3 +81,13 @@ if(a2_existed !== false){
   throw("fail6")
 }
 
+
+// primitive types
+var d_value = {struct: "structD"};
+my_map.put(1, d_value);
+
+if (my_map.get(1) !== d_value) {
+  throw("fail7")
+}
+
+
