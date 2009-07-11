@@ -82,7 +82,7 @@ if(a2_existed !== false){
 }
 
 
-// primitive types
+// primitive types keys 
 var d_value = {struct: "structD"};
 my_map.put(1, d_value);
 
